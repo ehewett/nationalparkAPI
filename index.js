@@ -11,7 +11,7 @@ function formatQueryParams(params) {
   return queryItems.join("&");
 }
 
-function displayResults(responseJson) {
+function displayResults(responseJson, maxResults) {
   // if there are previous results, remove them
   console.log(responseJson);
   $("#results-list").empty();
@@ -27,7 +27,7 @@ function displayResults(responseJson) {
   $("#results").removeClass("hidden");
 }
 
-function getParks(query, maxResults = 10) {
+function getParks(query, maxResults) {
   const params = {
     stateCode: query,
     limit: maxResults,
@@ -45,7 +45,7 @@ function getParks(query, maxResults = 10) {
       }
       throw new Error(response.statusText);
     })
-    .then((responseJson) => displayResults(responseJson))
+    .then((responseJson) => displayResults(responseJson, maxResults))
     .catch((err) => {
       $("#error-message").text(`Something went wrong: ${err.message}`);
     });
